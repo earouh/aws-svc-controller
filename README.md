@@ -47,6 +47,12 @@ $ kubectl get awsservice,svc,ep
 
 ## Local Dev Test
 
+Prepare CRD at your k8s cluster.
+```shell
+$ kubectl apply -f crd.yaml
+```
+
+Run controller at local.
 ```shell
 $ docker run --rm -d \
     -e AWS_REGION={ aws access key } \
