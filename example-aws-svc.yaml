@@ -1,0 +1,10 @@
+apiVersion: earou.io/v1
+kind: AWSService
+metadata:
+  name: bar-svc
+spec:
+  port: 80
+  targetPort: 80
+  selector:
+    awsTagName: ec2/app
+    awsTagValue: bar

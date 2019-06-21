@@ -1,0 +1,100 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: awsservices.earou.io
+spec:
+  group: earou.io
+  version: v1
+  names:
+    kind: AWSService
+    plural: awsservices
+    singular: awsservice
+  scope: Namespaced
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aws-system
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: awsservice-controller
+  namespace: aws-system
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: awsservice-controller
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+- apiGroups:
+  - "earou.io"
+  resources:
+  - awsservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: awsservice-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: awsservice-controller
+subjects:
+- kind: ServiceAccount
+  name: awsservice-controller
+  namespace: aws-system
+  
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aws-svc-controller
+  namespace: aws-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aws-svc-controller
+  template:
+    metadata:
+      labels:
+        app: aws-svc-controller
+    spec:
+      serviceAccountName: awsservice-controller
+      containers:
+      - image: earou/aws-svc-controller:latest
+        name: aws-svc-controller
+               
