@@ -1,5 +1,7 @@
 # AWS Service Controller
 
+NOTE: This is just a practice for developing a Kubernetes controller. Not for production.
+
 ## Purpose
 
 Create a Kubernetes Service for AWS EC2 private IPs. 
