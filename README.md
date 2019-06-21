@@ -1,6 +1,6 @@
 # AWS Service Controller
 
-NOTE: This is just a practice for developing a Kubernetes controller. Not for production.
+__NOTE:__ This is just a practice for developing a Kubernetes controller. Not for production.
 
 ## Purpose
 
@@ -17,7 +17,7 @@ So that we can expand our service mesh scope not only in the Kubernetes cluster 
 
 ## Setup
 
-NOTE: the `aws-svc-controller` must have the AWS permissions to list and describe EC2 instances.
+__NOTE:__ the `aws-svc-controller` must have the AWS permissions to list and describe EC2 instances.
 
 ```shell
 # will create a namespace, aws-system. and run a controller pod inside.
